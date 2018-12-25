@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+import { NgForm } from '@angular/forms';
+
+import { ItemsService } from '../items.service';
+
 @Component({
   selector: 'app-item-create',
   templateUrl: './item-create.component.html',
@@ -7,10 +11,14 @@ import { Component } from '@angular/core';
 })
 
 export class ItemCreateComponent {
-  enteredValue = '';
-  newItem = '';
+  enteredName = '';
+  enteredPrice;
+  enteredDescription = '';
 
-  onAddItem () {
-    this.newItem = this.enteredValue;
+  constructor(public itemsService: ItemsService) {}
+
+  onAddItem (form: NgForm) {
+    this.itemsService.addItem(form.value.itemName, form.value.itemPrice, form.value.itemDescription);
+    form.resetForm();
   }
 }

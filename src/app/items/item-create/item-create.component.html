@@ -1,8 +1,18 @@
 <mat-card>
-  <mat-form-field>
-    <textarea matInput rows="6" [(ngModel)]="enteredValue"></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="accent" (click)="onAddItem()">Save Post</button>
+  <form (submit)="onAddItem(itemForm)" #itemForm="ngForm">
+    <mat-form-field>
+      <input matInput type="text" name="itemName" placeholder="Item Name" ngModel required #itemName="ngModel">
+      <mat-error *ngIf="itemName.invalid">Please enter an item Name</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" name="itemPrice" placeholder="Item Price" ngModel required #itemPrice="ngModel">
+      <mat-error *ngIf="itemPrice.invalid">Please enter an item Price</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput rows="3" name="itemDescription" placeholder="Item Description" ngModel required #itemDescription="ngModel"></textarea>
+      <mat-error *ngIf="itemDescription.invalid">Please enter an item Description</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="accent" type="submit">Save Post</button>
+  </form>
 </mat-card>
-<p> {{ newItem }} </p>
 

@@ -7,18 +7,21 @@ import {
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
+  MatExpansionModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { ItemCreateComponent } from './items/item-create/item-create.component';
 import { HeaderComponent } from './header/header.component';
+import { ItemListComponent } from './items/item-list/item-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ItemCreateComponent,
-    HeaderComponent
+    HeaderComponent,
+    ItemListComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { HeaderComponent } from './header/header.component';
     MatInputModule,
     MatCardModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

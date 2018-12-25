@@ -1,0 +1,18 @@
+<mat-accordion *ngIf="items.length > 0">
+  <mat-expansion-panel *ngFor = "let item of items">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ item.itemName }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ item.itemPrice }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>{{ item.itemDescription }}</p>
+    <mat-action-row>
+      <button mat-button color="accent">Edit</button>
+      <button mat-button color="warn">Delete</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="items.length <= 0">No items added yet</p>
