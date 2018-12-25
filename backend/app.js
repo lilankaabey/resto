@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyParser = require("body-parser");
 
 const app = express();
+
+app.use(bodyParser.json()); //This will return valid express midleware
+app.use(bodyParser.urlencoded({ extended: false })); //This will not needed here.
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -13,6 +17,14 @@ app.use((req, res, next) => {
     "GET, POST, PATCH, DELETE, OPTIONS"
   )
   next();
+});
+
+app.post("/api/items", (res, req, next) => {
+  const item = req.body;
+  console.log(item);
+  res.status(201).json({
+    message: 'Post added successfully!'
+  }); //This is a typical status code for everything is okay a new resource was created
 });
 
 app.use('/api/items', (req, res, next) => {
