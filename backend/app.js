@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PATCH, DELETE, OPTIONS"
-  )
+  );
   next();
 });
 
@@ -23,11 +23,11 @@ app.post("/api/items", (res, req, next) => {
   const item = req.body;
   console.log(item);
   res.status(201).json({
-    message: 'Post added successfully!'
+    message: 'Item added successfully!'
   }); //This is a typical status code for everything is okay a new resource was created
 });
 
-app.use('/api/items', (req, res, next) => {
+app.get("/api/items", (req, res, next) => {
   const items = [
     {
       id: 'fadf14253l',

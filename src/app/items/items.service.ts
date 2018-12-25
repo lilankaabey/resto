@@ -25,7 +25,11 @@ export class ItemsService {
 
   addItem(itemName: string, itemPrice: number, itemDescription: string) {
     const item: Item = {id: null, itemName: itemName, itemPrice: itemPrice, itemDescription: itemDescription };
-    this.items.push(item);
-    this.itemsUpdated.next([...this.items]);
+    this.http.post<{message: string}>('http://localhost:3000/api/items', item)
+      .subscribe((responseData) => {
+        console.log(responseData.message);
+        this.items.push(item);
+        this.itemsUpdated.next([...this.items]);
+      });
   }
 }
