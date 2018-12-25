@@ -22,7 +22,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   constructor(public itemsService: ItemsService) {}
 
   ngOnInit() {
-    this.items = this.itemsService.getItems();
+    this.itemsService.getItems();
     this.itemsSub = this.itemsService.getItemsUpdateListner()
     .subscribe((items: Item[]) => {
       this.items = items;

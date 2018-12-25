@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { ItemCreateComponent } from './items/item-create/item-create.component';
 import { HeaderComponent } from './header/header.component';
 import { ItemListComponent } from './items/item-list/item-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ItemListComponent } from './items/item-list/item-list.component';
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
