@@ -1,7 +1,18 @@
 const express = require('express');
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
+const Item = require('./models/item');
 
 const app = express();
+
+mongoose.connect("mongodb+srv://lilanka:xQ80UNWaPjbTCct5@cluster0-d5hq9.mongodb.net/resto?retryWrites=true")
+  .then(() => {
+    console.log("Conencted to database!");
+  })
+  .catch(() => {
+    console.log("Conncetion failed!");
+  });
 
 app.use(bodyParser.json()); //This will return valid express midleware
 app.use(bodyParser.urlencoded({ extended: false })); //This will not needed here.
@@ -20,32 +31,25 @@ app.use((req, res, next) => {
 });
 
 app.post("/api/items", (res, req, next) => {
-  const item = req.body;
-  console.log(item);
+  const item = new Item({
+    itemName: req.body.itemName,
+    itemPrice: req.body.itemPrice,
+    itemDescription: req.body.itemDescription
+  });
+  item.save();
   res.status(201).json({
     message: 'Item added successfully!'
   }); //This is a typical status code for everything is okay a new resource was created
 });
 
 app.get("/api/items", (req, res, next) => {
-  const items = [
-    {
-      id: 'fadf14253l',
-      itemName: 'First server-side post',
-      itemPrice: 550.00,
-      itemDescription: 'This is coming from the server'
-    },
-    {
-      id: 'osiada541po',
-      itemName: 'Second server-side post',
-      itemPrice: 650.00,
-      itemDescription: 'This is coming from the server!'
-    }
-  ];
-  res.status(200).json({
-    message: 'Posts fetched succesfully!',
-    items: items
-  });
+  Item.find().then(documents => {
+    res.status(200).json({
+      message: 'Posts fetched succesfully!',
+      items: documents
+    });
+  })
+
 });
 
 
