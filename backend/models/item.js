@@ -6,4 +6,4 @@ const itemSchema = mongoose.Schema({
   itemDescription: { type: String, required: true }
 });
 
-module.exports = mongoose.model('Item', postSchema);
+module.exports = mongoose.model('Item', itemSchema);
