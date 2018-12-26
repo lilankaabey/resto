@@ -12,7 +12,7 @@ export class ItemsService {
   constructor(private http: HttpClient) {}
 
   getItems() {
-    this.http.get<({message: string, items: Item[]})>('http://localhost:3000/api/items')
+    this.http.get<{message: string, items: Item[]}>('http://localhost:3000/api/items')
     .subscribe((itemData) => {
       this.items = itemData.items;
       this.itemsUpdated.next([...this.items]);
