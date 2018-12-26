@@ -15,7 +15,7 @@ export class ItemsService {
 
   getItems() {
     this.http
-      .get<{message: string, items: Item[]}>('http://localhost:3000/api/items')
+      .get<{message: string, items: any }>('http://localhost:3000/api/items')
         .pipe(map((itemData) => {
           return itemData.items.map(item => {
             return {
@@ -39,11 +39,21 @@ export class ItemsService {
   addItem(itemName: string, itemPrice: number, itemDescription: string) {
     const item: Item = {itemId: null, itemName: itemName, itemPrice: itemPrice, itemDescription: itemDescription };
     this.http
-      .post<{message: string}>('http://localhost:3000/api/items', item)
+      .post<{message: string, itemId: string}>('http://localhost:3000/api/items', item)
         .subscribe((responseData) => {
-          console.log(responseData.message);
+          const itemId = responseData.itemId;
+          item.itemId = itemId;
           this.items.push(item);
           this.itemsUpdated.next([...this.items]);
         });
+  }
+
+  deleteItem(itemId: string) {
+    this.http.delete('http://localhost:3000/api/items/' + itemId)
+      .subscribe(() => {
+        const updatedItems = this.items.filter(item => item.itemId !== itemId);
+        this.items = updatedItems;
+        this.itemsUpdated.next([...this.items]);
+      });
   }
 }

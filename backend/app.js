@@ -36,10 +36,12 @@ app.post("/api/items", (res, req, next) => {
     itemPrice: req.body.itemPrice,
     itemDescription: req.body.itemDescription
   });
-  item.save();
-  res.status(201).json({
-    message: 'Item added successfully!'
-  }); //This is a typical status code for everything is okay a new resource was created
+  item.save().then(createdItem => {
+    res.status(201).json({
+      message: 'Item added successfully',
+      itemId: createdItem._id
+    }); //This is a typical status code for everything
+  });  // is okay a new resource was created
 });
 
 app.get("/api/items", (req, res, next) => {
@@ -48,9 +50,14 @@ app.get("/api/items", (req, res, next) => {
       message: 'Posts fetched succesfully!',
       items: documents
     });
-  })
-
+  });
 });
 
+app.delete("/api/items/:itemId", (req, res, next) => {
+  Item.deleteOne({_id: req.params.itemId}).then(result => {
+    console.log(result);
+    res.status(200).json({ message: "Post Deleted!"});
+  });
+});
 
 module.exports = app;

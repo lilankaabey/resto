@@ -10,12 +10,6 @@ import { ItemsService } from '../items.service';
 })
 
 export class ItemListComponent implements OnInit, OnDestroy {
-  // items = [
-  //   {name: 'First Item', price: 'Rs. 500.00', description: 'This is the first item' },
-  //   {name: 'Second Item', price: 'Rs. 700.00', description: 'This is the second item' },
-  //   {name: 'Third Item', price: 'Rs. 500.00', description: 'This is the third item' },
-  // ];
-
   items: Item[] = [];
   private itemsSub: Subscription;
 
@@ -27,6 +21,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
     .subscribe((items: Item[]) => {
       this.items = items;
     });
+  }
+
+  onDelete(itemId: string) {
+    this.itemsService.deleteItem(itemId);
   }
 
   ngOnDestroy() {
