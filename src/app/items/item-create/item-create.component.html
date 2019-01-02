@@ -1,7 +1,15 @@
 <mat-card>
-  <form (submit)="onSaveItem(itemForm)" #itemForm="ngForm">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSaveItem(itemForm)" #itemForm="ngForm" *ngIf="!isLoading">
     <mat-form-field>
-      <input matInput type="text" name="itemName" placeholder="Item Name" [ngModel]="item?.itemName" required #itemName="ngModel">
+      <input
+        matInput
+        type="text"
+        name="itemName"
+        placeholder="Item Name"
+        [ngModel]="item?.itemName"
+        required
+        #itemName="ngModel">
       <mat-error *ngIf="itemName.invalid">Please enter an item Name</mat-error>
     </mat-form-field>
     <mat-form-field>

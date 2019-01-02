@@ -14,9 +14,10 @@ import { Item } from '../item.model';
 
 export class ItemCreateComponent implements OnInit {
   enteredName = '';
-  enteredPrice;
+  enteredPrice: number;
   enteredDescription = '';
   item: Item;
+  isLoading = false;
   private mode = 'create';
   private itemId: string;
 
@@ -27,8 +28,15 @@ export class ItemCreateComponent implements OnInit {
       if (paramMap.has('itemId')) {
         this.mode = 'edit';
         this.itemId = paramMap.get('itemId');
+        this.isLoading = true;
         this.itemsService.getItem(this.itemId).subscribe(itemData => {
-          this.item = {itemId: itemData._id, itemName: itemData.itemName, itemPrice: itemData.itemPrice, itemDescription: itemData.itemDescription };
+          this.isLoading = false;
+          this.item = {
+            itemId: itemData._id,
+            itemName: itemData.itemName,
+            itemPrice: itemData.itemPrice,
+            itemDescription: itemData.itemDescription
+          };
         });
       } else {
         this.mode = 'create';
@@ -41,6 +49,7 @@ export class ItemCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+    this.isLoading = true;
     if (this.mode === 'create') {
       this.itemsService.addItem(form.value.itemName, form.value.itemPrice, form.value.itemDescription);
     } else {

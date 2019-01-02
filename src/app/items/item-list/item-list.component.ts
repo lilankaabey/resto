@@ -11,14 +11,17 @@ import { ItemsService } from '../items.service';
 
 export class ItemListComponent implements OnInit, OnDestroy {
   items: Item[] = [];
+  isLoading = false;
   private itemsSub: Subscription;
 
   constructor(public itemsService: ItemsService) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.itemsService.getItems();
     this.itemsSub = this.itemsService.getItemsUpdateListner()
     .subscribe((items: Item[]) => {
+      this.isLoading = false;
       this.items = items;
     });
   }

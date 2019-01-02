@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 import { map } from 'rxjs/operators'; // this method allows us to transform every element open array
 // into a new elements stored them back to a new array
 
@@ -11,7 +12,7 @@ export class ItemsService {
   private items: Item[] = [];
   private itemsUpdated = new Subject<Item[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getItems() {
     this.http
@@ -37,7 +38,12 @@ export class ItemsService {
   }
 
   getItem(itemId: string) {
-    return this.http.get<{ _id: string, itemName: string, itemPrice: number, itemDescription: string }>('http://localhost:3000/api/items/' + itemId);
+    return this.http.get<{
+      _id: string,
+      itemName: string,
+      itemPrice: number,
+      itemDescription: string
+    }>('http://localhost:3000/api/items/' + itemId);
   }
 
   addItem(itemName: string, itemPrice: number, itemDescription: string) {
@@ -49,6 +55,7 @@ export class ItemsService {
           item.itemId = itemId;
           this.items.push(item);
           this.itemsUpdated.next([...this.items]);
+          this.router.navigate(['/']);
         });
   }
 
@@ -61,6 +68,7 @@ export class ItemsService {
         updatedItems[oldItemIndex] = item;
         this.items = updatedItems;
         this.itemsUpdated.next([...this.items]);
+        this.router.navigate(['/']);
       });
   }
 
