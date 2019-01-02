@@ -1,18 +1,17 @@
 <mat-card>
-  <form (submit)="onAddItem(itemForm)" #itemForm="ngForm">
+  <form (submit)="onSaveItem(itemForm)" #itemForm="ngForm">
     <mat-form-field>
-      <input matInput type="text" name="itemName" placeholder="Item Name" ngModel required #itemName="ngModel">
+      <input matInput type="text" name="itemName" placeholder="Item Name" [ngModel]="item.itemName" required #itemName="ngModel">
       <mat-error *ngIf="itemName.invalid">Please enter an item Name</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" name="itemPrice" placeholder="Item Price" ngModel required #itemPrice="ngModel">
+      <input matInput type="text" name="itemPrice" placeholder="Item Price" [ngModel]="item.itemPrice" required #itemPrice="ngModel">
       <mat-error *ngIf="itemPrice.invalid">Please enter an item Price</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput rows="3" name="itemDescription" placeholder="Item Description" ngModel required #itemDescription="ngModel"></textarea>
+      <textarea matInput rows="3" name="itemDescription" placeholder="Item Description" [ngModel]="item.itemDescription" required #itemDescription="ngModel"></textarea>
       <mat-error *ngIf="itemDescription.invalid">Please enter an item Description</mat-error>
     </mat-form-field>
     <button mat-raised-button color="accent" type="submit">Save Post</button>
   </form>
 </mat-card>
-

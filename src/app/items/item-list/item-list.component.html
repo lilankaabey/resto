@@ -10,7 +10,7 @@
     </mat-expansion-panel-header>
     <p>{{ item.itemDescription }}</p>
     <mat-action-row>
-      <button mat-button color="accent">Edit</button>
+      <a mat-button color="accent" [routerLink]="['/edit', item.id]" >Edit</a>
       <button mat-button color="warn" (click)="onDelete(item.itemId)">Delete</button>
     </mat-action-row>
   </mat-expansion-panel>

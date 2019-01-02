@@ -36,6 +36,10 @@ export class ItemsService {
     return this.itemsUpdated.asObservable();
   }
 
+  getItem(itemId: string) {
+    return {...this.items.find(i => i.itemId === itemId)};
+  }
+
   addItem(itemName: string, itemPrice: number, itemDescription: string) {
     const item: Item = {itemId: null, itemName: itemName, itemPrice: itemPrice, itemDescription: itemDescription };
     this.http
@@ -46,6 +50,12 @@ export class ItemsService {
           this.items.push(item);
           this.itemsUpdated.next([...this.items]);
         });
+  }
+
+  updateItem(itemId: string, itemName: string, itemPrice: number, itemDescription: string) {
+    const item: Item = {itemId: itemId, itemName: itemName, itemPrice: itemPrice, itemDescription: itemDescription };
+    this.http.put('http://localhost:3000/api/items/' + itemId, item)
+      .subscribe(response => console.log(response));
   }
 
   deleteItem(itemId: string) {

@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE, OPTIONS"
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
   next();
 });
@@ -42,6 +42,19 @@ app.post("/api/items", (res, req, next) => {
       itemId: createdItem._id
     }); //This is a typical status code for everything
   });  // is okay a new resource was created
+});
+
+app.put("/api/items/:itemId", (req, res, next) => {
+  const item = new Item[{
+    _id: req.body.itemId,
+    itemName: req.body.itemName,
+    itemPrice: req.body.itemPrice.
+    itemDescription: req.body.itemDescription
+  }];
+  Item.updateOne({_id: req.params.itemId}, item).then(result => {
+    console.log(result);
+    res.status(200).json({message: 'Updat Successful!'});
+  })
 });
 
 app.get("/api/items", (req, res, next) => {
