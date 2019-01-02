@@ -37,7 +37,7 @@ export class ItemsService {
   }
 
   getItem(itemId: string) {
-    return {...this.items.find(i => i.itemId === itemId)};
+    return this.http.get<{ _id: string, itemName: string, itemPrice: number, itemDescription: string }>('http://localhost:3000/api/items/' + itemId);
   }
 
   addItem(itemName: string, itemPrice: number, itemDescription: string) {
@@ -55,7 +55,13 @@ export class ItemsService {
   updateItem(itemId: string, itemName: string, itemPrice: number, itemDescription: string) {
     const item: Item = {itemId: itemId, itemName: itemName, itemPrice: itemPrice, itemDescription: itemDescription };
     this.http.put('http://localhost:3000/api/items/' + itemId, item)
-      .subscribe(response => console.log(response));
+      .subscribe(response => {
+        const updatedItems = [...this.items];
+        const oldItemIndex = updatedItems.findIndex(i => i.itemId === item.itemId);
+        updatedItems[oldItemIndex] = item;
+        this.items = updatedItems;
+        this.itemsUpdated.next([...this.items]);
+      });
   }
 
   deleteItem(itemId: string) {

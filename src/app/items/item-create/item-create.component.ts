@@ -27,7 +27,9 @@ export class ItemCreateComponent implements OnInit {
       if (paramMap.has('itemId')) {
         this.mode = 'edit';
         this.itemId = paramMap.get('itemId');
-        this.item =  this.itemsService.getItem(this.itemId);
+        this.itemsService.getItem(this.itemId).subscribe(itemData => {
+          this.item = {itemId: itemData._id, itemName: itemData.itemName, itemPrice: itemData.itemPrice, itemDescription: itemData.itemDescription };
+        });
       } else {
         this.mode = 'create';
         this.itemId = null;
